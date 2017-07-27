@@ -1,14 +1,14 @@
 package com.homedepot.training.baseball;
 
 import com.homedepot.training.game.Team;
-//import org.apache.logging.log4j.LogManager;
-//import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.homedepot.training.game.Game;
 
 public class BaseballGame extends Game
 {
-//    public static Logger log  = LogManager.getLogger();
+    public static Logger log  = LogManager.getLogger();
 
     private int   regulationInnings;
 
@@ -37,7 +37,7 @@ public class BaseballGame extends Game
         while( !boxScore.isGameOver() )
         {
             ++batterUp;
-            System.out.println( "Batter: " + batterUp );
+            log.debug( "Batter: " + batterUp );
             if ( atBat.getOutcome() == BattingOutcome.OUT )
                 boxScore.recordOut();
 //            else
@@ -47,8 +47,6 @@ public class BaseballGame extends Game
                 boxScore.displayBoxScore();
                 boxScore.endHalfInning();
             }
-
-            System.out.println();
         }
     }
 

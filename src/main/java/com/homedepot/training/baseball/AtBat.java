@@ -1,11 +1,16 @@
 package com.homedepot.training.baseball;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Random;
 
 
 
 public class AtBat
 {
+    private static Logger log = LogManager.getLogger();
+
     Random   chance = new Random();
     // convert a random number in to an at bat outcome
     public BattingOutcome getOutcome()
@@ -47,7 +52,7 @@ public class AtBat
         }
 
 
-        System.out.println( outcomeName );
+        log.debug( outcomeName );
 
         return outcome;
     }

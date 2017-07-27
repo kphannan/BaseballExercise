@@ -1,11 +1,19 @@
 package com.homedepot.training.baseball;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
+
 public class BoxScore
 {
     private BaseballGame game;
     private int          currentHalfInning;
     private int          outs;
     private int          currentInning;
+
+    private static Logger log         = LogManager.getLogger();
+    private static Logger scoreboard  = LogManager.getLogger( "BoxScore" );
 
     public BoxScore( BaseballGame game )
     {
@@ -25,65 +33,85 @@ public class BoxScore
     {
 //        System.out.println( game.getAwayTeamName() + " v. " + game.getHomeTeamName() );
 
+        StringBuilder  header                = new StringBuilder();
+        StringBuilder  awayTeamBoxScore      = new StringBuilder();
+        StringBuilder  homeTeamBoxScore      = new StringBuilder();
 
-        for ( int row = 0; row < 3; ++row )
-        {
+//        for ( int row = 0; row < 3; ++row )
+//        {
             for ( int inning = 0; inning <= game.getRegulationInnings() + 1; ++inning )
             {
                 String text = "";
                 if ( inning == 0 )
                 {
-                    if ( row == 1 )
-                    {
-                        text = game.getAwayTeamName();
-                        if ( currentHalfInning % 2 == 1 ) text += ">";
-                    }
-                    else if ( row == 2 )
-                    {
-                        text = game.getHomeTeamName();
-                        if ( currentHalfInning % 2 == 0 ) text += ">";
-                    }
+//                    if ( row == 1 )
+//                    {
+                        awayTeamBoxScore.append( game.getAwayTeamName() );
+                        if ( currentHalfInning % 2 == 1 ) awayTeamBoxScore.append( '>' );
+//                    }
+//                    else if ( row == 2 )
+//                    {
+                        homeTeamBoxScore.append( game.getHomeTeamName() );
+                        if ( currentHalfInning % 2 == 0 ) homeTeamBoxScore.append( '>' );
+//                    }
 
-                    for ( int space = 15 - text.length(); space > 0; --space )
-                    {
-                        System.out.print( ' ' );
-                    }
+//                    for ( int space = 15 - text.length(); space > 0; --space )
+//                    {
+//                        System.out.print( ' ' );
+//                    }
                 }
                 // Total runs
-                else if ( row == 0 && inning == game.getRegulationInnings() + 1 )
+                else if ( inning == game.getRegulationInnings() + 1 )
                 {
-                    text = "Runs";
+                    header.append( "Runs" );
+//                    text = "Runs";
                 }
-                else if ( row == 0 && inning == game.getRegulationInnings() + 2 )
+                else if ( inning == game.getRegulationInnings() + 2 )
                 {
-                    text = "Hits";
+                    header.append( "Hits" );
                     continue;
                 }
-                else if ( row == 0 && inning == game.getRegulationInnings() + 3 )
+                else if ( inning == game.getRegulationInnings() + 3 )
                 {
-                    text = "Errors";
+                    header.append( "Errors" );
                     continue;
                 }
                 // Team score
                 else
                 {
-                    if ( row == 0 )
-                        text = " " + inning;
-                    else
-                    {
+//                    if ( row == 0 )
+                        header.append( " " + inning );
+//                    else
+//                    {
                         if ( currentHalfInning / 2 < inning )
-                            text = " -";
-                        else
-                            text = "  ";
-                    }
+                        {
+                            if ( currentHalfInning % 2 == 1 )
+                                awayTeamBoxScore.append( " 0" );
+                            else
+                                awayTeamBoxScore.append( "  " );
+                            if ( currentHalfInning % 2 == 0 )
+                                homeTeamBoxScore.append( " 0" );
+                            else
+                                homeTeamBoxScore.append( "  " );
+                            text = " 0";
+                        }
+//                        else
+//                            text = "  ";
+//                    }
                 }
 
-                System.out.print( text );
-                System.out.print( " |" );
+                log.info( text );
+                log.info( " |" );
+//                scoreboard.info( text );
+//                scoreboard.info( " |" );
             }
 
-            System.out.println();
-        }
+        scoreboard.info( header );
+        scoreboard.info( awayTeamBoxScore );
+        scoreboard.info( homeTeamBoxScore );
+            log.info("");
+            scoreboard.info("");
+//        }
     }
 
     public void recordOut()

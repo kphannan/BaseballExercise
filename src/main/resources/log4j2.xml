@@ -1,0 +1,48 @@
+<Configuration monitorInterval="60">
+
+    <Properties>
+        <!-- Configure Properties here -->
+    </Properties>
+
+    <Appenders>
+
+        <!-- basic console appender -->
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %highlight{%-5level} %logger{36} - %msg%n" />
+        </Console>
+
+        <Console name="console-simple" target="SYSTEM_OUT">
+            <PatternLayout pattern="%msg%n" />
+        </Console>
+
+    </Appenders>
+
+
+    <Loggers>
+        <!-- Associate the root logger with the console appender -->
+        <Root level="error">
+            <AppenderRef ref="console" />
+        </Root>
+
+
+        <!--
+        <Logger name="com.homedepot.training" additivity="false" level="info">
+            <AppenderRef ref="console-simple" />
+        </Logger>
+        -->
+
+        <Logger name="BoxScore" additivity="false" level="debug">
+            <AppenderRef ref="console-simple" />
+        </Logger>
+
+        <Logger name="com.homedepot.training.game" additivity="false" level="error">
+            <AppenderRef ref="console" />
+        </Logger>
+
+        <Logger name="com.homedepot.training.baseball" additivity="false" level="error">
+            <AppenderRef ref="console" />
+        </Logger>
+
+    </Loggers>
+
+</Configuration>
